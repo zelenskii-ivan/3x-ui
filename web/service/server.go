@@ -1351,10 +1351,34 @@ func (s *ServerService) GetNewVlessEnc() (any, error) {
 	if current != nil {
 		auths = append(auths, current)
 	}
+	auths = append(auths, deriveVlessEncModes(auths)...)
 
 	return map[string]any{
 		"auths": auths,
 	}, nil
+}
+
+// deriveVlessEncModes adds the xorpub and random variants of every key pair
+// printed by `xray vlessenc`, which only prints the native mode. The keys are
+// the same; xorpub hides the public key in the handshake and random makes the
+// whole handshake look like random bytes.
+func deriveVlessEncModes(auths []map[string]string) []map[string]string {
+	var extra []map[string]string
+	for _, a := range auths {
+		for _, mode := range []string{"xorpub", "random"} {
+			dec := strings.Replace(a["decryption"], ".native.", "."+mode+".", 1)
+			enc := strings.Replace(a["encryption"], ".native.", "."+mode+".", 1)
+			if dec == a["decryption"] && enc == a["encryption"] {
+				continue
+			}
+			extra = append(extra, map[string]string{
+				"label":      a["label"] + " (" + mode + ")",
+				"decryption": dec,
+				"encryption": enc,
+			})
+		}
+	}
+	return extra
 }
 
 func (s *ServerService) GetNewUUID() (map[string]string, error) {
