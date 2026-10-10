@@ -60,6 +60,8 @@ var defaultValueMap = map[string]string{
 	"subEnableRouting":            "true",
 	"subRoutingRules":             "",
 	"subRoutingSource":            "default",
+	"subRoutingExtras":            "true",
+	"subShadowrocket":             "true",
 	"geoAutoUpdate":               "false",
 	"geoAutoUpdateCron":           "@daily",
 	"geoAutoUpdateSources":        "ROSCOM",
@@ -503,6 +505,18 @@ func (s *SettingService) GetSubRoutingRules() (string, error) {
 
 func (s *SettingService) GetSubRoutingSource() (string, error) {
 	return s.getString("subRoutingSource")
+}
+
+// GetSubRoutingExtras reports whether WB/Ozon direct rules and tracker blocking
+// are layered on top of the selected RoscomVPN routing profile.
+func (s *SettingService) GetSubRoutingExtras() (bool, error) {
+	return s.getBool("subRoutingExtras")
+}
+
+// GetSubShadowrocket reports whether the subscription serves a Shadowrocket
+// routing config at <subPath><subId>/shadowrocket.conf.
+func (s *SettingService) GetSubShadowrocket() (bool, error) {
+	return s.getBool("subShadowrocket")
 }
 
 func (s *SettingService) GetGeoAutoUpdate() (bool, error) {

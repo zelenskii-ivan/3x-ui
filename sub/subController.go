@@ -20,6 +20,8 @@ type SUBController struct {
 	subEnableRouting bool
 	subRoutingRules  string
 	subRoutingSource string
+	subRoutingExtras bool
+	subShadowrocket  bool
 	subPath          string
 	subJsonPath      string
 	jsonEnabled      bool
@@ -51,6 +53,8 @@ func NewSUBController(
 	subEnableRouting bool,
 	subRoutingRules string,
 	subRoutingSource string,
+	subRoutingExtras bool,
+	subShadowrocket bool,
 ) *SUBController {
 	sub := NewSubService(showInfo, rModel)
 	a := &SUBController{
@@ -61,6 +65,8 @@ func NewSUBController(
 		subEnableRouting: subEnableRouting,
 		subRoutingRules:  subRoutingRules,
 		subRoutingSource: subRoutingSource,
+		subRoutingExtras: subRoutingExtras,
+		subShadowrocket:  subShadowrocket,
 		subPath:          subPath,
 		subJsonPath:      jsonPath,
 		jsonEnabled:      jsonEnabled,
@@ -79,6 +85,9 @@ func NewSUBController(
 func (a *SUBController) initRouter(g *gin.RouterGroup) {
 	gLink := g.Group(a.subPath)
 	gLink.GET(":subid", a.subs)
+	if a.subShadowrocket {
+		gLink.GET(":subid/shadowrocket.conf", a.shadowrocketConf)
+	}
 	if a.jsonEnabled {
 		gJson := g.Group(a.subJsonPath)
 		gJson.GET(":subid", a.subJsons)
@@ -121,25 +130,27 @@ func (a *SUBController) subs(c *gin.Context) {
 			}
 			page := a.subService.BuildPageData(subId, hostHeader, traffic, lastOnline, subs, subURL, subJsonURL, basePathStr)
 			c.HTML(200, "subpage.html", gin.H{
-				"title":        "subscription.title",
-				"cur_ver":      config.GetVersion(),
-				"host":         page.Host,
-				"base_path":    page.BasePath,
-				"sId":          page.SId,
-				"download":     page.Download,
-				"upload":       page.Upload,
-				"total":        page.Total,
-				"used":         page.Used,
-				"remained":     page.Remained,
-				"expire":       page.Expire,
-				"lastOnline":   page.LastOnline,
-				"datepicker":   page.Datepicker,
-				"downloadByte": page.DownloadByte,
-				"uploadByte":   page.UploadByte,
-				"totalByte":    page.TotalByte,
-				"subUrl":       page.SubUrl,
-				"subJsonUrl":   page.SubJsonUrl,
-				"result":       page.Result,
+				"title":             "subscription.title",
+				"cur_ver":           config.GetVersion(),
+				"host":              page.Host,
+				"base_path":         page.BasePath,
+				"sId":               page.SId,
+				"download":          page.Download,
+				"upload":            page.Upload,
+				"total":             page.Total,
+				"used":              page.Used,
+				"remained":          page.Remained,
+				"expire":            page.Expire,
+				"lastOnline":        page.LastOnline,
+				"datepicker":        page.Datepicker,
+				"downloadByte":      page.DownloadByte,
+				"uploadByte":        page.UploadByte,
+				"totalByte":         page.TotalByte,
+				"subUrl":            page.SubUrl,
+				"shadowrocketRules": a.subShadowrocket,
+				"brand":             a.subTitle,
+				"subJsonUrl":        page.SubJsonUrl,
+				"result":            page.Result,
 			})
 			return
 		}
@@ -212,7 +223,11 @@ func (a *SUBController) ApplyCommonHeaders(
 	//Advanced (Happ)
 	c.Writer.Header().Set("Routing-Enable", strconv.FormatBool(profileEnableRouting))
 	if profileEnableRouting {
-		if rules := ResolveRoutingRules(profileRoutingSource, profileRoutingRules); rules != "" {
+		rules := ResolveRoutingRules(profileRoutingSource, profileRoutingRules)
+		if a.subRoutingExtras && routingSourceTakesExtras(profileRoutingSource) {
+			rules = applyRoutingExtras(rules)
+		}
+		if rules != "" {
 			c.Writer.Header().Set("Routing", rules)
 		}
 	}

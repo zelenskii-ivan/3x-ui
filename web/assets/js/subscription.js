@@ -20,6 +20,7 @@
     uploadByte: parseInt(el.getAttribute('data-uploadbyte') || '0', 10) || 0,
     totalByte: parseInt(el.getAttribute('data-totalbyte') || '0', 10) || 0,
     datepicker: el.getAttribute('data-datepicker') || 'gregorian',
+    shadowrocketRules: el.getAttribute('data-shadowrocket-rules') === 'true',
   };
 
   // Normalize lastOnline to milliseconds if it looks like seconds
@@ -145,6 +146,11 @@
       },
       happUrl() {
         return `happ://add/${this.app.subUrl}`;
+      },
+      shadowrocketRulesUrl() {
+        // <subUrl>/shadowrocket.conf, imported as a Shadowrocket config
+        const base = this.app.subUrl.split('?')[0].replace(/\/+$/, '');
+        return `shadowrocket://config/add/${base}/shadowrocket.conf`;
       }
     },
     methods: {

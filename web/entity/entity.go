@@ -63,6 +63,8 @@ type AllSetting struct {
 	SubEnableRouting bool   `json:"subEnableRouting" form:"subEnableRouting"` // Enable routing for subscription
 	SubRoutingRules  string `json:"subRoutingRules" form:"subRoutingRules"`   // Subscription global routing rules (Only for Happ)
 	SubRoutingSource string `json:"subRoutingSource" form:"subRoutingSource"` // Routing rules source: default | jsonsub | whitelist | custom (RoscomVPN)
+	SubRoutingExtras bool   `json:"subRoutingExtras" form:"subRoutingExtras"` // Add WB/Ozon direct rules and tracker blocking on top of the routing profile
+	SubShadowrocket  bool   `json:"subShadowrocket" form:"subShadowrocket"`   // Serve a Shadowrocket routing config next to the subscription
 	// NOTE: geoAutoUpdate / geoAutoUpdateCron / geoAutoUpdateSources /
 	// geoLastAutoUpdate* are persisted via dedicated /server/getGeoAutoUpdate
 	// and /server/setGeoAutoUpdate endpoints and must NOT be fields on

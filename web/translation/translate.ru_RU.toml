@@ -73,6 +73,7 @@
 "somethingWentWrong" = "Что-то пошло не так"
 
 [subscription]
+"shadowrocketRules" = "правила"
 "title" = "Информация о подписке"
 "subId" = "ID подписки"
 "status" = "Статус"
@@ -394,6 +395,10 @@
 "subRoutingSourceJsonSubDesc" = "JSONSUB: минимальный профиль для JSON-подписок — без встроенных правил, только DNS и кастомные geoip/geosite."
 "subRoutingSourceWhitelistDesc" = "WHITELIST: напрямую идут только сервисы и IP, присутствующие в белых списках РФ (geosite:whitelist + geoip:whitelist); всё остальное — через прокси, реклама и трекеры блокируются."
 "subRoutingSourceCustomDesc" = "Используется поле «Правила маршрутизации» ниже (любая happ://-ссылка или URL)."
+"subRoutingExtras" = "Правила для WB и Ozon"
+"subRoutingExtrasDesc" = "Добавляет к профилю RoscomVPN прямой доступ к доменам и подсетям Wildberries и Ozon и блокирует трекеры (AppMetrica, AppsFlyer, Adjust и др.), через которые приложения видят зарубежный IP."
+"subShadowrocket" = "Правила для Shadowrocket"
+"subShadowrocketDesc" = "Отдаёт конфиг маршрутизации для Shadowrocket по адресу <подписка>/shadowrocket.conf с теми же правилами. На странице подписки появится кнопка импорта."
 "subListen" = "Прослушивание IP"
 "subListenDesc" = "Оставьте пустым по умолчанию, чтобы отслеживать все IP-адреса"
 "subPort" = "Порт подписки"

@@ -183,6 +183,16 @@ func (s *Server) initRouter() (*gin.Engine, error) {
 		SubRoutingSource = "default"
 	}
 
+	SubRoutingExtras, err := s.settingService.GetSubRoutingExtras()
+	if err != nil {
+		SubRoutingExtras = true
+	}
+
+	SubShadowrocket, err := s.settingService.GetSubShadowrocket()
+	if err != nil {
+		SubShadowrocket = true
+	}
+
 	// set per-request localizer from headers/cookies
 	engine.Use(locale.LocalizerMiddleware())
 
@@ -262,7 +272,8 @@ func (s *Server) initRouter() (*gin.Engine, error) {
 	s.sub = NewSUBController(
 		g, LinksPath, JsonPath, subJsonEnable, Encrypt, ShowInfo, RemarkModel, SubUpdates,
 		SubJsonFragment, SubJsonNoises, SubJsonMux, SubJsonRules, SubTitle, SubSupportUrl,
-		SubProfileUrl, SubAnnounce, SubEnableRouting, SubRoutingRules, SubRoutingSource)
+		SubProfileUrl, SubAnnounce, SubEnableRouting, SubRoutingRules, SubRoutingSource,
+		SubRoutingExtras, SubShadowrocket)
 
 	return engine, nil
 }

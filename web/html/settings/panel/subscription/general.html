@@ -141,6 +141,21 @@
                 <a-textarea v-model="allSetting.subRoutingRules" placeholder="happ://routing/add/..."></a-textarea>
             </template>
         </a-setting-list-item>
+        <a-setting-list-item paddings="small" v-if="allSetting.subRoutingSource === 'default' || allSetting.subRoutingSource === 'whitelist'">
+            <template #title>{{ i18n "pages.settings.subRoutingExtras"}}</template>
+            <template #description>{{ i18n "pages.settings.subRoutingExtrasDesc"}}</template>
+            <template #control>
+                <a-switch v-model="allSetting.subRoutingExtras"></a-switch>
+            </template>
+        </a-setting-list-item>
+        <a-divider>Shadowrocket</a-divider>
+        <a-setting-list-item paddings="small">
+            <template #title>{{ i18n "pages.settings.subShadowrocket"}}</template>
+            <template #description>{{ i18n "pages.settings.subShadowrocketDesc"}}</template>
+            <template #control>
+                <a-switch v-model="allSetting.subShadowrocket"></a-switch>
+            </template>
+        </a-setting-list-item>
     </a-collapse-panel>
     <a-collapse-panel key="3" header='{{ i18n "pages.settings.certs" }}'>
         <a-setting-list-item paddings="small">

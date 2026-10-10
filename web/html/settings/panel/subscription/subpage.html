@@ -52,7 +52,7 @@
                 <a-card hoverable class="subscription-card">
                     <template #title>
                         <a-space>
-                            <span>{{ i18n "subscription.title" }}</span>
+                            <span>{{ if .brand }}{{ .brand }}{{ else }}{{ i18n "subscription.title" }}{{ end }}</span>
                             <a-tag>{{ .sId }}</a-tag>
                         </a-space>
                     </template>
@@ -220,6 +220,8 @@
                                         <a-menu slot="overlay" :class="themeSwitcher.currentTheme">
                                             <a-menu-item key="ios-shadowrocket"
                                                 @click="open(shadowrocketUrl)">Shadowrocket</a-menu-item>
+                                            <a-menu-item key="ios-shadowrocket-rules" v-if="app.shadowrocketRules"
+                                                @click="open(shadowrocketRulesUrl)">Shadowrocket — {{ i18n "subscription.shadowrocketRules" }}</a-menu-item>
                                             <a-menu-item key="ios-v2box" @click="open(v2boxUrl)">V2Box</a-menu-item>
                                             <a-menu-item key="ios-streisand"
                                                 @click="open(streisandUrl)">Streisand</a-menu-item>
@@ -246,7 +248,7 @@
     data-download="{{ .download }}" data-upload="{{ .upload }}" data-used="{{ .used }}" data-total="{{ .total }}"
     data-remained="{{ .remained }}" data-expire="{{ .expire }}" data-lastonline="{{ .lastOnline }}"
     data-downloadbyte="{{ .downloadByte }}" data-uploadbyte="{{ .uploadByte }}" data-totalbyte="{{ .totalByte }}"
-    data-datepicker="{{ .datepicker }}"></template>
+    data-datepicker="{{ .datepicker }}" data-shadowrocket-rules="{{ .shadowrocketRules }}"></template>
 <textarea id="subscription-links" style="display:none">{{ range .result }}{{ . }}
 {{ end }}</textarea>
 

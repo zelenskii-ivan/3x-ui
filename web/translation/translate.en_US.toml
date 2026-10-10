@@ -73,6 +73,7 @@
 "somethingWentWrong" = "Something went wrong"
 
 [subscription]
+"shadowrocketRules" = "rules"
 "title" = "Subscription info"
 "subId" = "Subscription ID"
 "status" = "Status"
@@ -394,6 +395,10 @@
 "subRoutingSourceJsonSubDesc" = "JSONSUB: minimal profile for JSON subscriptions — no built-in rules, just DNS and custom geoip/geosite."
 "subRoutingSourceWhitelistDesc" = "WHITELIST: direct only for services and IPs present in Russian whitelists (geosite:whitelist + geoip:whitelist); everything else via proxy, ads/trackers blocked."
 "subRoutingSourceCustomDesc" = "Use the Routing rules field below (any happ:// link or URL)."
+"subRoutingExtras" = "WB and Ozon rules"
+"subRoutingExtrasDesc" = "Adds direct routes for Wildberries and Ozon domains and subnets on top of the RoscomVPN profile and blocks trackers (AppMetrica, AppsFlyer, Adjust, etc.) that expose the foreign exit IP to apps."
+"subShadowrocket" = "Shadowrocket rules"
+"subShadowrocketDesc" = "Serves a Shadowrocket routing config with the same rules at <subscription>/shadowrocket.conf. An import button appears on the subscription page."
 "subListen" = "Listen IP"
 "subListenDesc" = "The IP address for the subscription service. (leave blank to listen on all IPs)"
 "subPort" = "Listen Port"
