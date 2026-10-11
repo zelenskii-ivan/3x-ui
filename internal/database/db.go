@@ -1282,7 +1282,7 @@ func runSeeders(isUsersEmpty bool) error {
 	}
 
 	if empty && isUsersEmpty {
-		seeders := []string{"UserPasswordHash", "ClientsTable", "InboundClientsArrayFix", "InboundClientTgIdFix2", "InboundClientSubIdFix", "FreedomFinalRulesReverseFix", "FreedomFinalRulesPrivateEgressBlock", "UppercaseFreedomFinalRulesFix", "InboundRealityFinalmaskTcpStrip", "ApiTokensHash", "LegacyProxySettingsCleanup", "OutboundRemovedKeysFix", "FreedomDomainStrategyFix", "DNSOutboundLegacyKeysFix", "DNSOutboundQTypeZeroFix", "WireguardDomainStrategyFix", "XdnsFinalmaskObjectsFix", "WireguardPeersToClients", "MtprotoSecretsToClients", "NodeInboundsAdopted", "ResetIpLimitNoFail2ban"}
+		seeders := []string{"UserPasswordHash", "ClientsTable", "InboundClientsArrayFix", "InboundClientTgIdFix2", "InboundClientSubIdFix", "FreedomFinalRulesReverseFix", "FreedomFinalRulesPrivateEgressBlock", "UppercaseFreedomFinalRulesFix", "InboundRealityFinalmaskTcpStrip", "ApiTokensHash", "LegacyProxySettingsCleanup", "OutboundRemovedKeysFix", "FreedomDomainStrategyFix", "DNSOutboundLegacyKeysFix", "DNSOutboundQTypeZeroFix", "WireguardDomainStrategyFix", "XdnsFinalmaskObjectsFix", "WireguardPeersToClients", "MtprotoSecretsToClients", "NodeInboundsAdopted", "ResetIpLimitNoFail2ban", "RoscomVPNRoutingSourceToRules"}
 		for _, name := range seeders {
 			if err := db.Create(&model.HistoryOfSeeders{SeederName: name}).Error; err != nil {
 				return err
@@ -1425,6 +1425,12 @@ func runSeeders(isUsersEmpty bool) error {
 
 	if !slices.Contains(seedersHistory, "XdnsFinalmaskObjectsFix") {
 		if err := migrateXdnsFinalmaskObjects(); err != nil {
+			return err
+		}
+	}
+
+	if !slices.Contains(seedersHistory, "RoscomVPNRoutingSourceToRules") {
+		if err := migrateRoscomVPNRoutingSource(); err != nil {
 			return err
 		}
 	}
@@ -1616,6 +1622,48 @@ func clearLegacyProxySettings() error {
 			return err
 		}
 		return tx.Create(&model.HistoryOfSeeders{SeederName: "LegacyProxySettingsCleanup"}).Error
+	})
+}
+
+// The RoscomVPN 3x-ui fork kept the chosen profile in subRoutingSource; v3
+// reads remote Happ profiles straight from subRoutingRules.
+var roscomVPNRoutingProfileURLs = map[string]string{
+	"default":   "https://raw.githubusercontent.com/hydraponique/roscomvpn-routing/main/HAPP/DEFAULT.DEEPLINK",
+	"jsonsub":   "https://raw.githubusercontent.com/hydraponique/roscomvpn-routing/main/HAPP/JSONSUB.DEEPLINK",
+	"whitelist": "https://raw.githubusercontent.com/hydraponique/roscomvpn-routing/main/HAPP/WHITELIST.DEEPLINK",
+}
+
+func migrateRoscomVPNRoutingSource() error {
+	return db.Transaction(func(tx *gorm.DB) error {
+		var source model.Setting
+		err := tx.Where("key = ?", "subRoutingSource").First(&source).Error
+		if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
+			return err
+		}
+		profileURL := ""
+		if err == nil {
+			profileURL = roscomVPNRoutingProfileURLs[strings.ToLower(strings.TrimSpace(source.Value))]
+		}
+		if profileURL != "" {
+			var rules model.Setting
+			rulesErr := tx.Where("key = ?", "subRoutingRules").First(&rules).Error
+			switch {
+			case errors.Is(rulesErr, gorm.ErrRecordNotFound):
+				if err := tx.Create(&model.Setting{Key: "subRoutingRules", Value: profileURL}).Error; err != nil {
+					return err
+				}
+			case rulesErr != nil:
+				return rulesErr
+			case strings.TrimSpace(rules.Value) == "":
+				if err := tx.Model(&rules).Update("value", profileURL).Error; err != nil {
+					return err
+				}
+			}
+		}
+		if err := tx.Where("key = ?", "subRoutingSource").Delete(&model.Setting{}).Error; err != nil {
+			return err
+		}
+		return tx.Create(&model.HistoryOfSeeders{SeederName: "RoscomVPNRoutingSourceToRules"}).Error
 	})
 }
 
