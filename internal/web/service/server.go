@@ -2269,6 +2269,9 @@ var geofileAllowlist = map[string]geofileEntry{
 	"geosite_IR.dat": {"https://github.com/chocolate4u/Iran-v2ray-rules", "geosite.dat", "geosite_IR.dat"},
 	"geoip_RU.dat":   {"https://github.com/runetfreedom/russia-v2ray-rules-dat", "geoip.dat", "geoip_RU.dat"},
 	"geosite_RU.dat": {"https://github.com/runetfreedom/russia-v2ray-rules-dat", "geosite.dat", "geosite_RU.dat"},
+
+	"geoip_ROSCOM.dat":   {"https://github.com/hydraponique/roscomvpn-geoip", "geoip.dat", "geoip_ROSCOM.dat"},
+	"geosite_ROSCOM.dat": {"https://github.com/hydraponique/roscomvpn-geosite", "geosite.dat", "geosite_ROSCOM.dat"},
 }
 
 // GeodataSource identifies a file Xray downloads through its geodata configuration.

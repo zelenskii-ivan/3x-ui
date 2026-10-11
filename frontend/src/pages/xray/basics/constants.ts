@@ -10,6 +10,8 @@ export const IPS_OPTIONS = [
   { label: '🇮🇷 Iran', value: 'ext:geoip_IR.dat:ir' },
   { label: '🇨🇳 China', value: 'geoip:cn' },
   { label: '🇷🇺 Russia', value: 'ext:geoip_RU.dat:ru' },
+  { label: '🚀 RoscomVPN direct', value: 'ext:geoip_ROSCOM.dat:direct' },
+  { label: '🚀 RoscomVPN whitelist', value: 'ext:geoip_ROSCOM.dat:whitelist' },
   { label: '🇻🇳 Vietnam', value: 'geoip:vn' },
   { label: '🇪🇸 Spain', value: 'geoip:es' },
   { label: '🇮🇩 Indonesia', value: 'geoip:id' },
@@ -28,9 +30,14 @@ export const DOMAINS_OPTIONS = [
   { label: '🇷🇺 .su', value: 'regexp:.*\\.su$' },
   { label: '🇷🇺 .рф', value: 'regexp:.*\\.xn--p1ai$' },
   { label: '🇻🇳 .vn', value: 'regexp:.*\\.vn$' },
+  { label: '🚀 RoscomVPN RU', value: 'ext:geosite_ROSCOM.dat:category-ru' },
+  { label: '🚀 RoscomVPN whitelist', value: 'ext:geosite_ROSCOM.dat:whitelist' },
 ];
 export const BLOCK_DOMAINS_OPTIONS = [
   { label: 'Ads All', value: 'geosite:category-ads-all' },
+  { label: '🚫 RoscomVPN Ads', value: 'ext:geosite_ROSCOM.dat:category-ads' },
+  { label: '🚫 RoscomVPN Win spy', value: 'ext:geosite_ROSCOM.dat:win-spy' },
+  { label: '🚫 RoscomVPN Torrent DHT', value: 'ext:geosite_ROSCOM.dat:torrent' },
   { label: 'Ads IR 🇮🇷', value: 'ext:geosite_IR.dat:category-ads-all' },
   { label: 'Ads RU 🇷🇺', value: 'ext:geosite_RU.dat:category-ads-all' },
   { label: 'Malware 🇮🇷', value: 'ext:geosite_IR.dat:malware' },
