@@ -1,0 +1,74 @@
+name: Enot upgrade check
+
+# Upgrades a database written by the RoscomVPN-based 5.8.x build that
+# production panels still run, and fails if routing or clients are lost.
+on:
+  push:
+    branches:
+      - "enot-*"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  upgrade-from-5x:
+    runs-on: ubuntu-latest
+    env:
+      XUI_DB_FOLDER: ${{ github.workspace }}/xui-db
+      OLD_RELEASE: v5.8.11-enot.2
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: go.mod
+          cache: true
+      - name: Create a 5.8.x database
+        run: |
+          set -euo pipefail
+          sudo apt-get install -y sqlite3 >/dev/null
+          mkdir -p "$XUI_DB_FOLDER" old
+          curl -fsSL "https://github.com/${GITHUB_REPOSITORY}/releases/download/${OLD_RELEASE}/x-ui-linux-amd64.tar.gz" | tar xz -C old
+          (cd old/x-ui && ./x-ui setting -username admin -password admin-pass-123)
+          db="$XUI_DB_FOLDER/x-ui.db"
+          sqlite3 "$db" <<'SQL'
+          INSERT INTO settings(key, value) VALUES
+            ('subRoutingSource', 'default'),
+            ('subRoutingRules', ''),
+            ('subEnableRouting', 'true'),
+            ('subRoutingExtras', 'true'),
+            ('subShadowrocket', 'true'),
+            ('subTitle', 'Enot');
+          INSERT INTO inbounds(user_id, up, down, total, all_time, remark, enable, expiry_time, traffic_reset, last_traffic_reset_time, listen, port, protocol, settings, stream_settings, tag, sniffing)
+          VALUES (1, 0, 0, 0, 0, 'Roscom', 1, 0, 'never', 0, '', 443, 'vless',
+            '{"clients":[{"id":"51cca2da-c16d-4340-a094-c6a9e3f8ccf2","flow":"xtls-rprx-vision","email":"My","limitIp":0,"totalGB":0,"expiryTime":0,"enable":true,"tgId":"","subId":"331dsvm7jf69t3jd","comment":"","reset":0}],"decryption":"none","encryption":"none"}',
+            '{"network":"tcp","security":"reality","realitySettings":{"show":false,"xver":0,"target":"intel.com:443","serverNames":["intel.com"],"privateKey":"aGVsbG8taGVsbG8taGVsbG8taGVsbG8taGVsbG8taGU","shortIds":["9af4850604e5"]},"tcpSettings":{"header":{"type":"none"}}}',
+            'inbound-443', '{"enabled":true,"destOverride":["http","tls","quic"],"routeOnly":true}');
+          INSERT INTO client_traffics(inbound_id, enable, email, up, down, all_time, expiry_time, total, reset, last_online)
+          VALUES (1, 1, 'My', 100, 200, 300, 0, 0, 0, 0);
+          SQL
+      - name: Upgrade with this branch
+        run: |
+          set -euo pipefail
+          mkdir -p internal/web/dist && touch internal/web/dist/.gitkeep
+          go build -o xui-new .
+          ./xui-new migrate
+      - name: Check the upgraded database
+        run: |
+          set -euo pipefail
+          db="$XUI_DB_FOLDER/x-ui.db"
+          q() { sqlite3 "$db" "$1"; }
+          fail=0
+          check() {
+            if [ "$2" = "$3" ]; then echo "::notice title=$1::ok ($2)"; else echo "::error title=$1::got '$2', want '$3'"; fail=1; fi
+          }
+          check routing-rules "$(q "SELECT value FROM settings WHERE key='subRoutingRules'")" \
+            "https://raw.githubusercontent.com/hydraponique/roscomvpn-routing/main/HAPP/DEFAULT.DEEPLINK"
+          check routing-source-dropped "$(q "SELECT count(*) FROM settings WHERE key='subRoutingSource'")" "0"
+          check routing-extras "$(q "SELECT value FROM settings WHERE key='subRoutingExtras'")" "true"
+          check shadowrocket "$(q "SELECT value FROM settings WHERE key='subShadowrocket'")" "true"
+          check client-row "$(q "SELECT email || '|' || sub_id FROM clients")" "My|331dsvm7jf69t3jd"
+          check client-linked "$(q "SELECT count(*) FROM client_inbounds")" "1"
+          check traffic-kept "$(q "SELECT up + down FROM client_traffics WHERE email='My'")" "300"
+          check inbound-kept "$(q "SELECT protocol || '|' || port FROM inbounds")" "vless|443"
+          exit $fail
