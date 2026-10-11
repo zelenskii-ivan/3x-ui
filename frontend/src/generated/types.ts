@@ -155,7 +155,9 @@ export interface AllSetting {
   subPort: number;
   subProfileMode: string;
   subProfileUrl: string;
+  subRoutingExtras: boolean;
   subRoutingRules: string;
+  subShadowrocket: boolean;
   subShowIdentityOnAllLinks: boolean;
   subSupportUrl: string;
   subThemeDir: string;
@@ -343,7 +345,9 @@ export interface AllSettingView {
   subPort: number;
   subProfileMode: string;
   subProfileUrl: string;
+  subRoutingExtras: boolean;
   subRoutingRules: string;
+  subShadowrocket: boolean;
   subShowIdentityOnAllLinks: boolean;
   subSupportUrl: string;
   subThemeDir: string;

@@ -99,6 +99,8 @@ type AllSetting struct {
 	SubAnnounce                 string `json:"subAnnounce" form:"subAnnounce"`
 	SubEnableRouting            bool   `json:"subEnableRouting" form:"subEnableRouting"`
 	SubRoutingRules             string `json:"subRoutingRules" form:"subRoutingRules"`
+	SubRoutingExtras            bool   `json:"subRoutingExtras" form:"subRoutingExtras"`
+	SubShadowrocket             bool   `json:"subShadowrocket" form:"subShadowrocket"`
 	SubIncyEnableRouting        bool   `json:"subIncyEnableRouting" form:"subIncyEnableRouting"`
 	SubIncyRoutingRules         string `json:"subIncyRoutingRules" form:"subIncyRoutingRules"`
 	SubListen                   string `json:"subListen" form:"subListen"`

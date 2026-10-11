@@ -5,6 +5,7 @@ import {
   IdcardOutlined,
   InfoCircleOutlined,
   NodeIndexOutlined,
+  RocketOutlined,
   SafetyCertificateOutlined,
   SettingOutlined,
 } from '@ant-design/icons';
@@ -460,6 +461,23 @@ export default function SubscriptionGeneralTab({
               isMobile={isMobile}
               remoteSourceBadge={remoteSourceBadge}
             />
+          ),
+        },
+        {
+          key: '8',
+          label: catTabLabel(<RocketOutlined />, 'Shadowrocket', isMobile),
+          children: (
+            <SettingListItem
+              paddings="small"
+              title={t('pages.settings.subShadowrocket')}
+              description={t('pages.settings.subShadowrocketDesc')}
+            >
+              <Switch
+                aria-label={t('pages.settings.subShadowrocket')}
+                checked={allSetting.subShadowrocket}
+                onChange={(v) => updateSetting({ subShadowrocket: v })}
+              />
+            </SettingListItem>
           ),
         },
       ]}

@@ -59,6 +59,8 @@ type SUBController struct {
 	subAnnounce         string
 	subEnableRouting    bool
 	subRoutingRules     string
+	subRoutingExtras    bool
+	subShadowrocket     bool
 	subJsonRoutingRules string
 	subHideSettings     bool
 	happConfig          HappConfig
@@ -123,6 +125,8 @@ type subControllerConfig struct {
 	subAnnounce      string
 	subEnableRouting bool
 	subRoutingRules  string
+	subRoutingExtras bool
+	subShadowrocket  bool
 	subHideSettings  bool
 	happConfig       HappConfig
 	incyConfig       IncyConfig
@@ -245,6 +249,14 @@ func WithSUBRoutingRules(value string) SUBControllerOption {
 	return func(config *subControllerConfig) { config.subRoutingRules = value }
 }
 
+func WithSUBRoutingExtras(value bool) SUBControllerOption {
+	return func(config *subControllerConfig) { config.subRoutingExtras = value }
+}
+
+func WithSUBShadowrocket(value bool) SUBControllerOption {
+	return func(config *subControllerConfig) { config.subShadowrocket = value }
+}
+
 func WithSUBHideSettings(value bool) SUBControllerOption {
 	return func(config *subControllerConfig) { config.subHideSettings = value }
 }
@@ -296,6 +308,8 @@ func NewSUBController(g *gin.RouterGroup, options ...SUBControllerOption) *SUBCo
 		subAnnounce:         config.subAnnounce,
 		subEnableRouting:    config.subEnableRouting,
 		subRoutingRules:     config.subRoutingRules,
+		subRoutingExtras:    config.subRoutingExtras,
+		subShadowrocket:     config.subShadowrocket,
 		subJsonRoutingRules: config.subJsonRoutingRules,
 		subHideSettings:     config.subHideSettings,
 		happConfig:          config.happConfig,
@@ -332,6 +346,9 @@ func NewSUBController(g *gin.RouterGroup, options ...SUBControllerOption) *SUBCo
 func (a *SUBController) initRouter(g *gin.RouterGroup) {
 	gLink := g.Group(a.subPath)
 	gLink.GET(":subid", a.subs)
+	if a.subShadowrocket {
+		gLink.GET(":subid/"+shadowrocketConfFile, a.shadowrocketConf)
+	}
 	gLink.HEAD(":subid", a.subs)
 	gLink.GET(":subid/hwid-status", a.hwidStatus)
 	gLink.HEAD(":subid/hwid-status", a.hwidStatus)
@@ -695,7 +712,16 @@ func (a *SUBController) subPageContext(page PageData) map[string]any {
 		"emails":        page.Emails,
 		"datepicker":    datepicker,
 		"announce":      page.SubAnnounce,
+
+		"shadowrocketRulesUrl": a.shadowrocketRulesURL(page.SubUrl),
 	}
+}
+
+func (a *SUBController) shadowrocketRulesURL(subURL string) string {
+	if !a.subShadowrocket || subURL == "" {
+		return ""
+	}
+	return shadowrocketConfURL(subURL)
 }
 
 func (a *SUBController) enforceHwid(c *gin.Context) bool {
@@ -970,6 +996,9 @@ func (a *SUBController) ApplyCommonHeaders(
 		c.Writer.Header().Set("Routing-Enable", "true")
 	} else if happManaged {
 		c.Writer.Header().Set("Routing-Enable", "0")
+	}
+	if a.subRoutingExtras {
+		rules = applyMarketplaceRouting(rules)
 	}
 	if (routingErr == nil || !remote) && strings.TrimSpace(rules) != "" {
 		c.Writer.Header().Set("Routing", rules)

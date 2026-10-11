@@ -47,8 +47,8 @@ export default function SubAppsTab({ apps, initialPlatform, onOpen }: SubAppsTab
       <div className="sub-app-grid">
         {apps[platform].map((app) => (
           <div key={app.name} className="sub-row">
-            <AppIcon name={app.name} />
-            <span className="sub-app-name">{app.name}</span>
+            <AppIcon name={app.icon ?? app.name} />
+            <span className="sub-app-name">{app.labelKey ? t(app.labelKey) : app.name}</span>
             <Button type="primary" size="small" onClick={() => onOpen(app.url)}>
               {t('add')}
             </Button>

@@ -105,7 +105,8 @@
     "support": "پشتیبانی",
     "qrTitle": "اسکن. افزودن. اتصال.",
     "qrHint": "با اپلیکیشن کلاینت اسکن کنید. این کد را به کسی ندهید.",
-    "saveQr": "ذخیره QR"
+    "saveQr": "ذخیره QR",
+    "shadowrocketRules": "Shadowrocket rules"
   },
   "menu": {
     "theme": "تم",
@@ -1255,6 +1256,10 @@
       "subEnableRoutingDesc": "تنظیمات سراسری برای فعال‌سازی مسیریابی در کلاینت VPN. (فقط برای Happ)",
       "subRoutingRules": "قوانین مسیریابی",
       "subRoutingRulesDesc": "یک پیوند آماده happ:// یا یک نشانی دائمی HTTPS وارد کنید. پنل قوانین راه‌دور را در پس‌زمینه به‌روزرسانی و آخرین مقدار معتبر را نگه می‌دارد، بنابراین درخواست اشتراک منتظر منبع نمی‌ماند. (فقط برای Happ)",
+      "subRoutingExtras": "Wildberries and Ozon rules",
+      "subRoutingExtrasDesc": "Adds direct routes for Wildberries and Ozon domains and subnets to the Happ routing profile and blocks trackers (AppMetrica, AppsFlyer, Adjust, etc.) that reveal the foreign exit IP to apps.",
+      "subShadowrocket": "Shadowrocket routing config",
+      "subShadowrocketDesc": "Serves a Shadowrocket config with the same rules at <subscription>/shadowrocket.conf and shows an import button on the subscription page. Servers still come from the subscription itself.",
       "subHideSettings": "پنهان کردن تنظیمات سرور",
       "subHideSettingsDesc": "پنهان کردن توانایی مشاهده و ویرایش پیکربندی سرور در کلاینت VPN. (فقط برای Happ)",
       "subIncyEnableRouting": "فعال‌سازی مسیریابی",
@@ -1598,6 +1603,8 @@
       "subHappApplyPreset": "اعمال الگو",
       "subHappPresetGlobal": "پراکسی کل ترافیک (Global)",
       "subHappPresetLocal": "پراکسی سراسری با اتصال مستقیم شبکه محلی",
+      "subHappPresetRoscomDefault": "RoscomVPN DEFAULT (Russia direct, auto-updated)",
+      "subHappPresetRoscomWhitelist": "RoscomVPN WHITELIST (only Russian whitelist direct)",
       "subHappPresetOff": "غیرفعال‌سازی روتینگ (happ://routing/off)",
       "subHappColorBlue": "آبی (استاندارد / پیش‌فرض)",
       "subHappColorGreen": "سبز (موفقیت)",

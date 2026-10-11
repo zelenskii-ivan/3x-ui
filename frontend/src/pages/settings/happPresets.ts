@@ -7,10 +7,24 @@ export function toBase64Utf8(str: string): string {
   );
 }
 
+// Remote profiles the panel re-fetches and caches, so the client follows upstream list updates.
+export const ROSCOMVPN_PROFILE_URLS: Record<string, string> = {
+  'roscomvpn-default':
+    'https://raw.githubusercontent.com/hydraponique/roscomvpn-routing/main/HAPP/DEFAULT.DEEPLINK',
+  'roscomvpn-whitelist':
+    'https://raw.githubusercontent.com/hydraponique/roscomvpn-routing/main/HAPP/WHITELIST.DEEPLINK',
+};
+
+export function presetTakesAdblock(preset: string): boolean {
+  return preset !== 'off' && !(preset in ROSCOMVPN_PROFILE_URLS);
+}
+
 // Build standard Happ routing deeplink or special state for curated presets.
 export function buildHappPresetDeeplink(preset: string, includeAdblock = false): string {
   // Ad blocking is opt-in for each generated profile, independent of the base routing rules.
   const blockSites = includeAdblock ? ['geosite:category-ads-all'] : [];
+  const remoteProfile = ROSCOMVPN_PROFILE_URLS[preset];
+  if (remoteProfile) return remoteProfile;
 
   switch (preset) {
     case 'off':

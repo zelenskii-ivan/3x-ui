@@ -105,7 +105,8 @@
     "support": "支持",
     "qrTitle": "扫码。导入。连接。",
     "qrHint": "使用客户端应用扫描。请勿泄露此二维码。",
-    "saveQr": "保存二维码"
+    "saveQr": "保存二维码",
+    "shadowrocketRules": "Shadowrocket rules"
   },
   "menu": {
     "theme": "主题",
@@ -1251,6 +1252,10 @@
       "subEnableRoutingDesc": "在 VPN 客户端中启用路由的全局设置。（仅限 Happ）",
       "subRoutingRules": "路由规则",
       "subRoutingRulesDesc": "粘贴现成的 happ:// 深层链接或一个固定 HTTPS URL。面板会在后台更新远程规则并保留最后一个有效值，因此订阅请求无需等待远程源。（仅限 Happ）",
+      "subRoutingExtras": "Wildberries and Ozon rules",
+      "subRoutingExtrasDesc": "Adds direct routes for Wildberries and Ozon domains and subnets to the Happ routing profile and blocks trackers (AppMetrica, AppsFlyer, Adjust, etc.) that reveal the foreign exit IP to apps.",
+      "subShadowrocket": "Shadowrocket routing config",
+      "subShadowrocketDesc": "Serves a Shadowrocket config with the same rules at <subscription>/shadowrocket.conf and shows an import button on the subscription page. Servers still come from the subscription itself.",
       "subHideSettings": "隐藏服务器设置",
       "subHideSettingsDesc": "在 VPN 客户端中隐藏查看和编辑服务器配置的功能。（仅限 Happ）",
       "subIncyEnableRouting": "启用路由",
@@ -1598,6 +1603,8 @@
       "subHappApplyPreset": "应用预设",
       "subHappPresetGlobal": "全局代理规则 (Global)",
       "subHappPresetLocal": "全局代理，绕过局域网 (Global Bypass Local Network)",
+      "subHappPresetRoscomDefault": "RoscomVPN DEFAULT (Russia direct, auto-updated)",
+      "subHappPresetRoscomWhitelist": "RoscomVPN WHITELIST (only Russian whitelist direct)",
       "subHappPresetOff": "禁用路由 (happ://routing/off)",
       "subHappColorBlue": "蓝色 (标准 / 默认)",
       "subHappColorGreen": "绿色 (成功)",

@@ -132,4 +132,24 @@ describe('buildSubApps', () => {
       `shadowrocket://add/sub://${rocket}?remark=Nova%20Net`,
     );
   });
+
+  it('offers the Shadowrocket routing config right after Shadowrocket when the panel serves it', () => {
+    const rulesUrl = 'https://sub.example.com/sub/abc/shadowrocket.conf';
+    const ios = buildSubApps({ ...sub, shadowrocketRulesUrl: rulesUrl }).ios;
+
+    expect(ios.map((app) => app.name).slice(0, 3)).toEqual([
+      'Shadowrocket',
+      'Shadowrocket rules',
+      'V2Box',
+    ]);
+    expect(ios[1]).toEqual({
+      name: 'Shadowrocket rules',
+      icon: 'Shadowrocket',
+      labelKey: 'subscription.shadowrocketRules',
+      url: `shadowrocket://config/add/${rulesUrl}`,
+    });
+    expect(buildSubApps({ ...sub, shadowrocketRulesUrl: rulesUrl }).android).toEqual(
+      buildSubApps(sub).android,
+    );
+  });
 });

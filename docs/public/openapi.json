@@ -492,8 +492,14 @@
           "subProfileUrl": {
             "type": "string"
           },
+          "subRoutingExtras": {
+            "type": "boolean"
+          },
           "subRoutingRules": {
             "type": "string"
+          },
+          "subShadowrocket": {
+            "type": "boolean"
           },
           "subShowIdentityOnAllLinks": {
             "type": "boolean"
@@ -744,7 +750,9 @@
           "subPort",
           "subProfileMode",
           "subProfileUrl",
+          "subRoutingExtras",
           "subRoutingRules",
+          "subShadowrocket",
           "subShowIdentityOnAllLinks",
           "subSupportUrl",
           "subThemeDir",
@@ -1268,8 +1276,14 @@
           "subProfileUrl": {
             "type": "string"
           },
+          "subRoutingExtras": {
+            "type": "boolean"
+          },
           "subRoutingRules": {
             "type": "string"
+          },
+          "subShadowrocket": {
+            "type": "boolean"
           },
           "subShowIdentityOnAllLinks": {
             "type": "boolean"
@@ -1528,7 +1542,9 @@
           "subPort",
           "subProfileMode",
           "subProfileUrl",
+          "subRoutingExtras",
           "subRoutingRules",
+          "subShadowrocket",
           "subShowIdentityOnAllLinks",
           "subSupportUrl",
           "subThemeDir",

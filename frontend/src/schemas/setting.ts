@@ -58,6 +58,8 @@ export const AllSettingSchema = z
     subAnnounce: z.string().optional(),
     subEnableRouting: z.boolean().optional(),
     subRoutingRules: z.string().optional(),
+    subRoutingExtras: z.boolean().optional(),
+    subShadowrocket: z.boolean().optional(),
     subIncyEnableRouting: z.boolean().optional(),
     subIncyRoutingRules: z.string().optional(),
     subListen: z.string().optional(),

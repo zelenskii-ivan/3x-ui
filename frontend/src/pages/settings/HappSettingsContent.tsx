@@ -10,7 +10,7 @@ import {
 } from '@ant-design/icons';
 import type { AllSetting } from '@/models/setting';
 import { SettingListItem } from '@/components/ui';
-import { buildHappPresetDeeplink } from './happPresets';
+import { buildHappPresetDeeplink, presetTakesAdblock } from './happPresets';
 import HappRoutingEditorModal from './HappRoutingEditorModal';
 import { catTabLabel } from './catTabLabel';
 
@@ -111,6 +111,14 @@ export default function HappSettingsContent({
                         { value: 'china-direct', label: t('pages.settings.subHappPresetChina') },
                         { value: 'global', label: t('pages.settings.subHappPresetGlobal') },
                         { value: 'lan-bypass', label: t('pages.settings.subHappPresetLocal') },
+                        {
+                          value: 'roscomvpn-default',
+                          label: t('pages.settings.subHappPresetRoscomDefault'),
+                        },
+                        {
+                          value: 'roscomvpn-whitelist',
+                          label: t('pages.settings.subHappPresetRoscomWhitelist'),
+                        },
                         { value: 'off', label: t('pages.settings.subHappPresetOff') },
                       ]}
                     />
@@ -118,7 +126,7 @@ export default function HappSettingsContent({
                       <Switch
                         aria-label={t('pages.settings.subHappIncludeAdblock')}
                         checked={includeAdblock}
-                        disabled={selectedPreset === 'off'}
+                        disabled={!presetTakesAdblock(selectedPreset)}
                         onChange={setIncludeAdblock}
                       />
                       <span>{t('pages.settings.subHappIncludeAdblock')}</span>
@@ -150,6 +158,18 @@ export default function HappSettingsContent({
                     rows={4}
                     placeholder="happ://routing/onadd/... or https://.../DEFAULT.DEEPLINK"
                     onChange={(e) => updateSetting({ subRoutingRules: e.target.value })}
+                  />
+                </SettingListItem>
+
+                <SettingListItem
+                  paddings="small"
+                  title={t('pages.settings.subRoutingExtras')}
+                  description={t('pages.settings.subRoutingExtrasDesc')}
+                >
+                  <Switch
+                    aria-label={t('pages.settings.subRoutingExtras')}
+                    checked={allSetting.subRoutingExtras}
+                    onChange={(v) => updateSetting({ subRoutingExtras: v })}
                   />
                 </SettingListItem>
 

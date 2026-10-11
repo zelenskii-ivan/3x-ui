@@ -52,6 +52,8 @@ export class AllSetting {
   subAnnounce = '';
   subEnableRouting = false;
   subRoutingRules = '';
+  subRoutingExtras = false;
+  subShadowrocket = false;
   subIncyEnableRouting = false;
   subIncyRoutingRules = '';
   subListen = '';

@@ -192,8 +192,32 @@ describe('Happ routing preset controls', () => {
       'China Direct (Bypass-CN)',
       'Full Proxy',
       'Global Bypass Local Network',
+      'RoscomVPN DEFAULT (Russia direct, auto-updated)',
+      'RoscomVPN WHITELIST (only Russian whitelist direct)',
       'Disable Routing (happ://routing/off)',
     ]);
+  });
+
+  it.each([
+    [
+      'RoscomVPN DEFAULT (Russia direct, auto-updated)',
+      'https://raw.githubusercontent.com/hydraponique/roscomvpn-routing/main/HAPP/DEFAULT.DEEPLINK',
+    ],
+    [
+      'RoscomVPN WHITELIST (only Russian whitelist direct)',
+      'https://raw.githubusercontent.com/hydraponique/roscomvpn-routing/main/HAPP/WHITELIST.DEEPLINK',
+    ],
+  ])('applies %s as a remote source the panel keeps updated', (label, url) => {
+    const updateSetting = renderSettings();
+    const includeAdblock = screen.getByRole('switch', { name: 'Include AdBlock' });
+    fireEvent.click(includeAdblock);
+    choosePreset(label);
+
+    expect((includeAdblock as HTMLButtonElement).disabled).toBe(true);
+    fireEvent.click(screen.getByRole('button', { name: 'Apply preset' }));
+
+    expect(updateSetting).toHaveBeenCalledExactlyOnceWith({ subRoutingRules: url });
+    expect(routingRules()).toBe(url);
   });
 
   it('disables AdBlock for Off and applies the off link even after opting in', () => {

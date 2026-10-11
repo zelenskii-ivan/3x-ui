@@ -39,18 +39,22 @@ export function detectPlatform(userAgent: string): AppPlatform {
 export interface SubApp {
   name: string;
   url: string;
+  icon?: string;
+  labelKey?: string;
 }
 
 export interface SubAppSource {
   subUrl: string;
   sId: string;
   subTitle: string;
+  shadowrocketRulesUrl?: string;
 }
 
 export function buildSubApps({
   subUrl,
   sId,
   subTitle,
+  shadowrocketRulesUrl,
 }: SubAppSource): Record<AppPlatform, SubApp[]> {
   const encSub = encodeURIComponent(subUrl);
   const profileName = encodeURIComponent(subTitle || sId);
@@ -68,6 +72,16 @@ export function buildSubApps({
   const incy = { name: 'Incy', url: `incy://add/${subUrl}` };
   const rocketSource = `${subUrl}${subUrl.includes('?') ? '&' : '?'}flag=shadowrocket`;
   const rocketRemark = encodeURIComponent(subTitle || sId || 'Subscription');
+  const rocketRules: SubApp[] = shadowrocketRulesUrl
+    ? [
+        {
+          name: 'Shadowrocket rules',
+          icon: 'Shadowrocket',
+          labelKey: 'subscription.shadowrocketRules',
+          url: `shadowrocket://config/add/${shadowrocketRulesUrl}`,
+        },
+      ]
+    : [];
 
   return {
     android: [
@@ -83,6 +97,7 @@ export function buildSubApps({
         name: 'Shadowrocket',
         url: `shadowrocket://add/sub://${btoa(rocketSource)}?remark=${rocketRemark}`,
       },
+      ...rocketRules,
       v2box,
       { name: 'Streisand', url: `streisand://import/${encSub}` },
       v2raytun,

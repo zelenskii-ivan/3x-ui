@@ -21,6 +21,7 @@ interface SubPageData {
   emails?: string[];
   datepicker?: 'gregorian' | 'jalalian';
   announce?: string;
+  shadowrocketRulesUrl?: string;
   downloadByte?: string | number;
   uploadByte?: string | number;
   usedByte?: string | number;

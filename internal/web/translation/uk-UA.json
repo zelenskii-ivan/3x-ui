@@ -105,7 +105,8 @@
     "support": "Підтримка",
     "qrTitle": "Скануйте. Імпортуйте. Підключайтеся.",
     "qrHint": "Відскануйте в клієнтському застосунку. Нікому не показуйте цей код.",
-    "saveQr": "Зберегти QR"
+    "saveQr": "Зберегти QR",
+    "shadowrocketRules": "Shadowrocket — правила"
   },
   "menu": {
     "theme": "Тема",
@@ -1251,6 +1252,10 @@
       "subEnableRoutingDesc": "Глобальне налаштування для увімкнення маршрутизації у VPN-клієнті. (Тільки для Happ)",
       "subRoutingRules": "Правила маршрутизації",
       "subRoutingRulesDesc": "Вставте готове посилання happ:// або одну постійну HTTPS-адресу. Панель оновлює віддалені правила у фоні та зберігає останнє коректне значення, тому запит підписки не чекає на джерело. (Тільки для Happ)",
+      "subRoutingExtras": "Правила для Wildberries і Ozon",
+      "subRoutingExtrasDesc": "Додає до профілю маршрутизації Happ прямий доступ до доменів і підмереж Wildberries та Ozon і блокує трекери (AppMetrica, AppsFlyer, Adjust тощо), через які застосунки бачать закордонну IP-адресу.",
+      "subShadowrocket": "Конфіг маршрутизації для Shadowrocket",
+      "subShadowrocketDesc": "Віддає конфіг Shadowrocket з тими самими правилами за адресою <підписка>/shadowrocket.conf і показує кнопку імпорту на сторінці підписки. Сервери, як і раніше, беруться з самої підписки.",
       "subHideSettings": "Приховати налаштування сервера",
       "subHideSettingsDesc": "Приховати можливість перегляду та редагування конфігурації сервера у VPN-клієнті. (Тільки для Happ)",
       "subIncyEnableRouting": "Увімкнути маршрутизацію",
@@ -1598,6 +1603,8 @@
       "subHappApplyPreset": "Застосувати шаблон",
       "subHappPresetGlobal": "Усе через проксі",
       "subHappPresetLocal": "Усе через проксі, локальна мережа напряму",
+      "subHappPresetRoscomDefault": "RoscomVPN DEFAULT (Росія напряму, автооновлення)",
+      "subHappPresetRoscomWhitelist": "RoscomVPN WHITELIST (напряму лише білий список РФ)",
       "subHappPresetOff": "Вимкнути маршрутизацію (happ://routing/off)",
       "subHappColorBlue": "Синій (стандартний / за замовчуванням)",
       "subHappColorGreen": "Зелений (успіх)",

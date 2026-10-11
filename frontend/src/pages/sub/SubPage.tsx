@@ -29,6 +29,7 @@ const subJsonUrl = subData.subJsonUrl || '';
 const subClashUrl = subData.subClashUrl || '';
 const subTitle = subData.subTitle || '';
 const subSupportUrl = subData.subSupportUrl || '';
+const shadowrocketRulesUrl = subData.shadowrocketRulesUrl || '';
 const updateHours = Number(subData.subUpdates || 0);
 const announce = subData.announce || '';
 const links: string[] = Array.isArray(subData.links) ? subData.links : [];
@@ -56,7 +57,7 @@ const heroData = {
   datepicker: subData.datepicker || 'gregorian',
 };
 
-const apps = buildSubApps({ subUrl, sId, subTitle });
+const apps = buildSubApps({ subUrl, sId, subTitle, shadowrocketRulesUrl });
 const initialPlatform = detectPlatform(navigator.userAgent);
 const RTL_LANGUAGES = new Set(['fa-IR', 'ar-EG']);
 

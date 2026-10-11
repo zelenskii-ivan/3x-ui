@@ -114,6 +114,8 @@ var defaultValueMap = map[string]string{
 	"subAnnounce":                 "",
 	"subEnableRouting":            "false",
 	"subRoutingRules":             "",
+	"subRoutingExtras":            "false",
+	"subShadowrocket":             "false",
 	"subHideSettings":             "false",
 	"subHappAutoDetect":           "false",
 	"subHappProviderId":           "",
@@ -932,6 +934,14 @@ func (s *SettingService) GetSubEnableRouting() (bool, error) {
 
 func (s *SettingService) GetSubRoutingRules() (string, error) {
 	return s.getString("subRoutingRules")
+}
+
+func (s *SettingService) GetSubRoutingExtras() (bool, error) {
+	return s.getBool("subRoutingExtras")
+}
+
+func (s *SettingService) GetSubShadowrocket() (bool, error) {
+	return s.getBool("subShadowrocket")
 }
 
 func (s *SettingService) GetSubHideSettings() (bool, error) {

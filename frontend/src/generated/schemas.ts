@@ -466,8 +466,14 @@ export const SCHEMAS: Record<string, unknown> = {
       "subProfileUrl": {
         "type": "string"
       },
+      "subRoutingExtras": {
+        "type": "boolean"
+      },
       "subRoutingRules": {
         "type": "string"
+      },
+      "subShadowrocket": {
+        "type": "boolean"
       },
       "subShowIdentityOnAllLinks": {
         "type": "boolean"
@@ -718,7 +724,9 @@ export const SCHEMAS: Record<string, unknown> = {
       "subPort",
       "subProfileMode",
       "subProfileUrl",
+      "subRoutingExtras",
       "subRoutingRules",
+      "subShadowrocket",
       "subShowIdentityOnAllLinks",
       "subSupportUrl",
       "subThemeDir",
@@ -1242,8 +1250,14 @@ export const SCHEMAS: Record<string, unknown> = {
       "subProfileUrl": {
         "type": "string"
       },
+      "subRoutingExtras": {
+        "type": "boolean"
+      },
       "subRoutingRules": {
         "type": "string"
+      },
+      "subShadowrocket": {
+        "type": "boolean"
       },
       "subShowIdentityOnAllLinks": {
         "type": "boolean"
@@ -1502,7 +1516,9 @@ export const SCHEMAS: Record<string, unknown> = {
       "subPort",
       "subProfileMode",
       "subProfileUrl",
+      "subRoutingExtras",
       "subRoutingRules",
+      "subShadowrocket",
       "subShowIdentityOnAllLinks",
       "subSupportUrl",
       "subThemeDir",

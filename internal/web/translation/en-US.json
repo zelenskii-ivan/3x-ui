@@ -105,7 +105,8 @@
     "support": "Support",
     "qrTitle": "Scan. Import. Connect.",
     "qrHint": "Scan with your client app. Keep this code private.",
-    "saveQr": "Save QR"
+    "saveQr": "Save QR",
+    "shadowrocketRules": "Shadowrocket rules"
   },
   "menu": {
     "theme": "Theme",
@@ -1373,6 +1374,10 @@
       "subEnableRoutingDesc": "Global setting to enable routing in the VPN client. (Only for Happ)",
       "subRoutingRules": "Routing rules",
       "subRoutingRulesDesc": "Paste a ready happ:// deeplink or one permanent HTTPS URL returning a deeplink or JSON. The panel refreshes remote rules in the background and keeps the last valid value, so subscription requests never wait for the source. (Happ only)",
+      "subRoutingExtras": "Wildberries and Ozon rules",
+      "subRoutingExtrasDesc": "Adds direct routes for Wildberries and Ozon domains and subnets to the Happ routing profile and blocks trackers (AppMetrica, AppsFlyer, Adjust, etc.) that reveal the foreign exit IP to apps.",
+      "subShadowrocket": "Shadowrocket routing config",
+      "subShadowrocketDesc": "Serves a Shadowrocket config with the same rules at <subscription>/shadowrocket.conf and shows an import button on the subscription page. Servers still come from the subscription itself.",
       "subHideSettings": "Hide server settings",
       "subHideSettingsDesc": "Hide the ability to view and edit server configurations in the VPN client. (Only for Happ)",
       "subIncyEnableRouting": "Enable routing",
@@ -1716,6 +1721,8 @@
       "subHappApplyPreset": "Apply preset",
       "subHappPresetGlobal": "Full Proxy",
       "subHappPresetLocal": "Global Bypass Local Network",
+      "subHappPresetRoscomDefault": "RoscomVPN DEFAULT (Russia direct, auto-updated)",
+      "subHappPresetRoscomWhitelist": "RoscomVPN WHITELIST (only Russian whitelist direct)",
       "subHappPresetOff": "Disable Routing (happ://routing/off)",
       "subHappColorBlue": "Blue (Standard / Default)",
       "subHappColorGreen": "Green (Success)",

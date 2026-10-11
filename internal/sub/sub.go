@@ -214,6 +214,16 @@ func (s *Server) initRouter() (*gin.Engine, error) {
 		SubRoutingRules = ""
 	}
 
+	SubRoutingExtras, err := s.settingService.GetSubRoutingExtras()
+	if err != nil {
+		SubRoutingExtras = false
+	}
+
+	SubShadowrocket, err := s.settingService.GetSubShadowrocket()
+	if err != nil {
+		SubShadowrocket = false
+	}
+
 	SubHideSettings, err := s.settingService.GetSubHideSettings()
 	if err != nil {
 		SubHideSettings = false
@@ -368,6 +378,8 @@ func (s *Server) initRouter() (*gin.Engine, error) {
 		WithSUBAnnounce(SubAnnounce),
 		WithSUBEnableRouting(SubEnableRouting),
 		WithSUBRoutingRules(SubRoutingRules),
+		WithSUBRoutingExtras(SubRoutingExtras),
+		WithSUBShadowrocket(SubShadowrocket),
 		WithSUBHideSettings(SubHideSettings),
 		WithSUBHappConfig(happCfg),
 		WithSUBIncyConfig(incyCfg),

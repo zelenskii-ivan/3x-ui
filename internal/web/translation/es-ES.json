@@ -105,7 +105,8 @@
     "support": "Soporte",
     "qrTitle": "Escanea. Importa. Conéctate.",
     "qrHint": "Escanéalo con tu aplicación cliente. Mantén este código en privado.",
-    "saveQr": "Guardar QR"
+    "saveQr": "Guardar QR",
+    "shadowrocketRules": "Shadowrocket rules"
   },
   "menu": {
     "theme": "Tema",
@@ -1251,6 +1252,10 @@
       "subEnableRoutingDesc": "Configuración global para habilitar el enrutamiento en el cliente VPN. (Solo para Happ)",
       "subRoutingRules": "Reglas de enrutamiento",
       "subRoutingRulesDesc": "Pegue un enlace happ:// listo o una URL HTTPS permanente. El panel actualiza las reglas remotas en segundo plano y conserva el último valor válido, sin retrasar las solicitudes de suscripción. (Solo para Happ)",
+      "subRoutingExtras": "Wildberries and Ozon rules",
+      "subRoutingExtrasDesc": "Adds direct routes for Wildberries and Ozon domains and subnets to the Happ routing profile and blocks trackers (AppMetrica, AppsFlyer, Adjust, etc.) that reveal the foreign exit IP to apps.",
+      "subShadowrocket": "Shadowrocket routing config",
+      "subShadowrocketDesc": "Serves a Shadowrocket config with the same rules at <subscription>/shadowrocket.conf and shows an import button on the subscription page. Servers still come from the subscription itself.",
       "subHideSettings": "Ocultar configuración del servidor",
       "subHideSettingsDesc": "Ocultar la posibilidad de ver y editar las configuraciones del servidor en el cliente VPN. (Solo para Happ)",
       "subIncyEnableRouting": "Habilitar enrutamiento",
@@ -1598,6 +1603,8 @@
       "subHappApplyPreset": "Aplicar preajuste",
       "subHappPresetGlobal": "Todo por proxy",
       "subHappPresetLocal": "Proxy global con exclusión de la red local",
+      "subHappPresetRoscomDefault": "RoscomVPN DEFAULT (Russia direct, auto-updated)",
+      "subHappPresetRoscomWhitelist": "RoscomVPN WHITELIST (only Russian whitelist direct)",
       "subHappPresetOff": "Desactivar enrutamiento (happ://routing/off)",
       "subHappColorBlue": "Azul (estándar / predeterminado)",
       "subHappColorGreen": "Verde (éxito)",

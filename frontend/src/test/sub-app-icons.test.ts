@@ -9,8 +9,11 @@ describe('APP_ICONS', () => {
       subUrl: 'https://sub.example.com/sub/abc',
       sId: 'abc',
       subTitle: '',
+      shadowrocketRulesUrl: 'https://sub.example.com/sub/abc/shadowrocket.conf',
     });
-    const names = [...new Set(Object.values(apps).flatMap((list) => list.map((app) => app.name)))];
+    const names = [
+      ...new Set(Object.values(apps).flatMap((list) => list.map((app) => app.icon ?? app.name))),
+    ];
 
     expect(names.filter((name) => !APP_ICONS[name]?.src)).toEqual([]);
   });
@@ -20,8 +23,11 @@ describe('APP_ICONS', () => {
       subUrl: 'https://sub.example.com/sub/abc',
       sId: 'abc',
       subTitle: '',
+      shadowrocketRulesUrl: 'https://sub.example.com/sub/abc/shadowrocket.conf',
     });
-    const offered = new Set(Object.values(apps).flatMap((list) => list.map((app) => app.name)));
+    const offered = new Set(
+      Object.values(apps).flatMap((list) => list.map((app) => app.icon ?? app.name)),
+    );
 
     expect(Object.keys(APP_ICONS).filter((name) => !offered.has(name))).toEqual([]);
   });
